@@ -10,7 +10,7 @@ stages {
             steps {
                 script {
                 sh '''
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE/cast-service:$DOCKER_TAG .
                 sleep 6
                 '''
                 }
