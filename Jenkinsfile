@@ -1,6 +1,6 @@
 pipeline {
 environment { // Declaration of environment variables
-DOCKER_ID = "poissonchat" // replace this with your docker-id
+DOCKER_ID = "poissonchat13" // replace this with your docker-id
 DOCKER_IMAGE = "eval-jenkins"
 DOCKER_IMAGE_CAST = "eval-jenkins-cast"
 DOCKER_IMAGE_MOVIE = "eval-jenkins-movie"
