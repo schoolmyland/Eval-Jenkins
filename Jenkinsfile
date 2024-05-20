@@ -23,9 +23,9 @@ stages {
                 steps {
                     script {
                     sh '''
-                    docker run -d -p 8080:8000 --name cast $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+                    docker run -d -p 8000:8000 --name cast $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
                     sleep 10
-                    docker run -d -p 8080:8000 --name movie $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+                    docker run -d -p 8000:8000 --name movie $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
                     sleep 10
                     '''
                     }
