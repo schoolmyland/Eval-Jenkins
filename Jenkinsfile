@@ -23,9 +23,7 @@ stages {
                 steps {
                     script {
                     sh '''
-                    docker run -d -p 8002:8002 --name cast $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
-                    sleep 10
-                    docker run -d -p 8001:8001 --name movie $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+                    docker-compose up -d
                     sleep 10
                     '''
                     }
