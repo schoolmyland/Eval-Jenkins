@@ -1,7 +1,6 @@
 pipeline {
 environment { // Declaration of environment variables
 DOCKER_ID = "poissonchat13" // replace this with your docker-id
-DOCKER_IMAGE = "eval-jenkins"
 DOCKER_IMAGE_CAST = "eval-jenkins-cast"
 DOCKER_IMAGE_MOVIE = "eval-jenkins-movie"
 DOCKER_TAG = "v.${BUILD_ID}.0" // we will tag our images with the current build in order to increment the value by 1 with each new build
@@ -24,9 +23,9 @@ stages {
                 steps {
                     script {
                     sh '''
-                    docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./cast-service/
+                    docker run -d -p 8080:8000 --name c $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
                     sleep 10
-                    docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./movie-service/
+                    docker run -d -p 8080:8000 --name c $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
                     sleep 10
                     '''
                     }
@@ -101,11 +100,11 @@ stage('Deploiement en QA'){
                 cp ./cast-service/values.yaml cs-values.yml
                 cat cs-values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
-                helm upgrade --install app cast-service --values=cs-values.yml --namespace QA
+                helm upgrade --install app cast-service --values=cs-values.yml --namespace qa
                 cp ./movie-service/values.yaml ms-values.yml
                 cat ms-values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
-                helm upgrade --install app movie-service --values=ms-values.yml --namespace QA
+                helm upgrade --install app movie-service --values=ms-values.yml --namespace qa
                 '''
                 }
             }
