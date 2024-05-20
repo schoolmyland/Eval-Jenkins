@@ -36,7 +36,8 @@ stages {
             steps {
                     script {
                     sh '''
-                    curl localhost
+                    curl localhost:8080/api/v1/casts/docs
+                    curl localhost:8080/api/v1/movies/docs
                     '''
                     }
             }
@@ -72,10 +73,14 @@ stage('Deploiement en dev'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp fastapi/values.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace dev
+                cp ./cast-service/values.yaml cs-values.yml
+                cat cs-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
+                helm upgrade --install app cast-service --values=cs-values.yml --namespace dev
+                cp ./movie-service/values.yaml ms-values.yml
+                cat ms-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
+                helm upgrade --install app movie-service --values=ms-values.yml --namespace dev
                 '''
                 }
             }
@@ -93,10 +98,14 @@ stage('Deploiement en QA'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp fastapi/values.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace QA
+                cp ./cast-service/values.yaml cs-values.yml
+                cat cs-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
+                helm upgrade --install app cast-service --values=cs-values.yml --namespace QA
+                cp ./movie-service/values.yaml ms-values.yml
+                cat ms-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
+                helm upgrade --install app movie-service --values=ms-values.yml --namespace QA
                 '''
                 }
             }
@@ -114,10 +123,14 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp fastapi/values.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace staging
+                cp ./cast-service/values.yaml cs-values.yml
+                cat cs-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
+                helm upgrade --install app cast-service --values=cs-values.yml --namespace staging
+                cp ./movie-service/values.yaml ms-values.yml
+                cat ms-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
+                helm upgrade --install app movie-service --values=ms-values.yml --namespace staging
                 '''
                 }
             }
@@ -140,10 +153,14 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp fastapi/values.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app fastapi --values=values.yml --namespace prod
+                cp ./cast-service/values.yaml cs-values.yml
+                cat cs-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
+                helm upgrade --install app cast-service --values=cs-values.yml --namespace prod
+                cp ./movie-service/values.yaml ms-values.yml
+                cat ms-values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
+                helm upgrade --install app movie-service --values=ms-values.yml --namespace prod
                 '''
                 }
             }
