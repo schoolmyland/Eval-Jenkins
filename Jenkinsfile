@@ -75,7 +75,7 @@ stage('Deploiement en dev'){
                 cat $KUBECONFIG > .kube/config
                 cat value.yaml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" value.yaml
-                helm upgrade --install app movie-service --values=value.yaml --namespace dev
+                helm upgrade --install app cast-movie-services --values=value.yaml --namespace dev
                 '''
                 }
             }
