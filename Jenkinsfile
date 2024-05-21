@@ -40,6 +40,19 @@ stages {
             }
 
         }
+        stage(' Docker Build'){ // docker build image stage
+            steps {
+                script {
+                sh '''
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./cast-service/
+                 sleep 6
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./movie-service/
+                 sleep 6
+                 '''
+                }
+            }
+        }
+
         stage('Docker Push'){ //we pass the built image to our docker hub account
             environment
             {
@@ -70,14 +83,9 @@ stage('Deploiement en dev'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-service/values.yaml cs-values.yml
-                cat cs-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
-                helm upgrade --install app cast-service --values=cs-values.yml --namespace dev
-                cp ./movie-service/values.yaml ms-values.yml
-                cat ms-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
-                helm upgrade --install app movie-service --values=ms-values.yml --namespace dev
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app movie-service --values=values.yml --namespace dev
                 '''
                 }
             }
