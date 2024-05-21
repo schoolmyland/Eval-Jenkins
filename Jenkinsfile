@@ -7,18 +7,6 @@ DOCKER_TAG = "v.${BUILD_ID}.0" // we will tag our images with the current build 
 }
 agent any // Jenkins will be able to select all available agents
 stages {
-        stage(' Docker Build'){ // docker build image stage
-            steps {
-                script {
-                sh '''
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./cast-service/
-                 sleep 6
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./movie-service/
-                 sleep 6
-                 '''
-                }
-            }
-        }
         stage('Docker run'){ // run container from our builded image
                 steps {
                     script {
@@ -44,6 +32,8 @@ stages {
             steps {
                 script {
                 sh '''
+                 docker-compose down
+                 sleep 15
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./cast-service/
                  sleep 6
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./movie-service/
