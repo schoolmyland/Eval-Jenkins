@@ -1,0 +1,37 @@
+namespace: qa
+cast:
+  deployment:
+    image: poissonchat13/eval-jenkins-cast:latest
+  service:
+    type: NodePort
+    port: 8000
+    targetPort: 8000
+    nodePort: 30116
+movie:
+  deployment:
+    image: poissonchat13/eval-jenkins-movie:latest
+  service:
+    type: NodePort
+    port: 8000
+    targetPort: 8000
+    nodePort: 30115
+db_movie:
+  deployment:
+    image: postgres:12.1-alpine
+  service:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+db_cast:
+  deployment:
+    image: postgres:12.1-alpine
+  service:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx_config.conf:/etc/nginx/conf.d/default.conf
