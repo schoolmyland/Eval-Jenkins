@@ -2,7 +2,8 @@ version: '3.7'
 
 services:
   movie_service:
-    image: poissonchat13/eval-jenkins-movie:latest
+    build: ./movie-service
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     volumes:
       - ./movie-service/:/app/
     ports:
@@ -23,7 +24,8 @@ services:
       - POSTGRES_DB=movie_db_dev
 
   cast_service:
-    image: poissonchat13/eval-jenkins-cast:latest
+    build: ./cast-service
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     volumes:
       - ./cast-service/:/app/
     ports:
