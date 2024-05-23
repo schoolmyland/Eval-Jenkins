@@ -32,7 +32,7 @@ spec:
           image: {{ .Values.db.deployment.image }}
           name: db
           ports:
-            - containerPort: 5432
+            - containerPort: {{ .Values.db.service.port }}
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
@@ -65,7 +65,7 @@ spec:
           imagePullPolicy: Always  
           name: cast
           ports:
-            - containerPort: 8000
+            - containerPort: {{ .Values.cast.service.port }}
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -91,7 +91,7 @@ spec:
           imagePullPolicy: Always  
           name: movie
           ports:
-            - containerPort: 8000
+            - containerPort: {{ .Values.movie.service.port }}
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -117,7 +117,7 @@ spec:
           imagePullPolicy: Always  
           name: nginx
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.nginx.service.port }}
           volumeMounts:
             - name: nginx-conf
             mountPath: /etc/nginx/conf.d/default.conf

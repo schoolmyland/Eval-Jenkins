@@ -15,14 +15,7 @@ movie:
     port: 8000
     targetPort: 8000
     nodePort: 30105
-db_movie:
-  deployment:
-    image: postgres:12.1-alpine
-  service:
-    type: ClusterIP
-    port: 5432
-    targetPort: 5432
-db_cast:
+db:
   deployment:
     image: postgres:12.1-alpine
   service:
