@@ -120,10 +120,11 @@ spec:
             - containerPort: {{ .Values.nginx.service.port }}
           volumeMounts:
             - name: nginx-conf
-            mountPath: /etc/nginx/conf.d/default.conf
+              mountPath: /etc/nginx/conf.d/default.conf
       volumes:
         - name: nginx-conf
           hostPath:
             path: {{ .Values.nginx.volumes.hostPath }}
 
       restartPolicy: Always
+
