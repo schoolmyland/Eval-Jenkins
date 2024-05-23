@@ -23,7 +23,8 @@ db:
     port: 5432
     targetPort: 5432
 nginx:
-    image: nginx:latest
+    deployment:
+      image: nginx:latest
     service:
       type: NodePort
       port: 80
