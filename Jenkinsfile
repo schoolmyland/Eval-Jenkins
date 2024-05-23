@@ -76,7 +76,7 @@ stage('Deploiement en dev'){
                 cp ./cast-movie-services/dev-value.yaml ./values.yaml
                 cat values.yaml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
-                helm upgrade --install app cast-movie-service --values=values.yaml --namespace dev
+                helm upgrade --install app cast-movie-services --values=values.yaml --namespace dev
                 '''
                 }
             }
