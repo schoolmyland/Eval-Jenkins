@@ -31,4 +31,4 @@ nginx:
       targetPort: 80
       nodePort: 30810
     volumes: 
-      hostPath: ~/Eval-Jenkins/nginx_config.conf
+      hostPath: /home/ubuntu/Eval-Jenkins/nginx_config.conf
