@@ -19,7 +19,7 @@ spec:
       containers:
         - env:
             - name: PGSQL_ROOT_PASSWORD
-              value:cast_db_dev     
+              value: cast_db_dev     
             - name: POSTGRES_DB
               value: storedb
             - name: POSTGRES_HOST_AUTH_METHOD
