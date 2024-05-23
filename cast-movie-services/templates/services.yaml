@@ -4,14 +4,14 @@ metadata:
   name: movie-service
   namespace: {{ .Values.namespace }}
 spec:
-  type:  {{ .Values.fastapi.service.type }}
+  type:  {{ .Values.movie.service.type }}
   selector:
     app: movie
   ports:
   - name: movie-port
-    port: {{ .Values.fastapi.service.port }}
-    targetPort: {{ .Values.fastapi.service.targetPort }}
-    nodePort: {{ .Values.fastapi.service.nodePort }}
+    port: {{ .Values.movie.service.port }}
+    targetPort: {{ .Values.movie.service.targetPort }}
+    nodePort: {{ .Values.movie.service.nodePort }}
 ---
 apiVersion: v1
 kind: Service
@@ -19,14 +19,14 @@ metadata:
   name: cast-service
   namespace: {{ .Values.namespace }}
 spec:
-  type:  {{ .Values.fastapi.service.type }}
+  type:  {{ .Values.cast.service.type }}
   selector:
     app: cast
   ports:
   - name: cast-port
-    port: {{ .Values.fastapi.service.port }}
-    targetPort: {{ .Values.fastapi.service.targetPort }}
-    nodePort: {{ .Values.fastapi.service.nodePort }}
+    port: {{ .Values.cast.service.port }}
+    targetPort: {{ .Values.cast.service.targetPort }}
+    nodePort: {{ .Values.cast.service.nodePort }}
 ---
 apiVersion: v1
 kind: Service
@@ -55,3 +55,18 @@ spec:
   - name: cast-db-port
     port: {{ .Values.db.service.port }}
     targetPort: {{ .Values.db.service.targetPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: {{ .Values.namespace }}
+spec:
+  type:  {{ .Values.cast.service.type }}
+  selector:
+    app: nginx
+  ports:
+  - name: nginx-port
+    port: {{ .Values.nginx.service.port }}
+    targetPort: {{ .Values.nginx.service.targetPort }}
+    nodePort: {{ .Values.nginx.service.nodePort }}
