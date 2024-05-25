@@ -98,10 +98,10 @@ stage('Deploiement en QA'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-movie-services/qa-value.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app cast-movie-services --values=values.yml --namespace qa
+                cp ./cast-movie-services/qa-value.yaml values.yaml
+                cat values.yaml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
+                helm upgrade --install app cast-movie-services --values=values.yaml --namespace qa
                 '''
                 }
             }
@@ -119,10 +119,10 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-movie-services/staging-value.yaml values2.yml
-                cat values2.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values2.yml
-                helm upgrade --install app cast-movie-services --values=values2.yml --namespace stag
+                cp ./cast-movie-services/staging-value.yaml values.yaml
+                cat values.yaml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
+                helm upgrade --install app cast-movie-services --values=values.yaml --namespace stag
                 '''
                 }
             }
@@ -133,6 +133,7 @@ stage('Deploiement en staging'){
         {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
         }
+        if (env.BRANCH_NAME == 'master') {
             steps {
 
                     timeout(time: 15, unit: "MINUTES") {
@@ -145,14 +146,16 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-movie-services/prod-value.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app cast-movie-services --values=values.yml --namespace prod
+                cp ./cast-movie-services/prod-value.yaml values.yaml
+                cat values.yaml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
+                helm upgrade --install app cast-movie-services --values=values.yaml --namespace prod
                 '''
                 }
             }
-
+          } else {
+            echo " branch non master pas de deployment en prod"
+          }
         }
 
 }
