@@ -128,21 +128,16 @@ stage('Deploiement en staging'){
             }
 
         }
-  stage('Deploiement en prod'){
-        environment
-        {
+stage('Deploiement en prod') {
+    environment {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
-        }
-            steps {
-              if (env.BRANCH_NAME == 'master') {
-
-                    timeout(time: 15, unit: "MINUTES") {
-                        input message: 'Une validation Manuel est necessaire pour le deploiement en production', ok: 'oui'
-                    }
-
-                script {
-                if (env.BRANCH_NAME == 'master') {
-
+    }
+    if (env.BRANCH_NAME == 'master') {
+        steps {
+            timeout(time: 15, unit: "MINUTES") {
+                input message: 'Une validation Manuel est necessaire pour le deploiement en production', ok: 'oui'
+            }
+            script {
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
@@ -153,13 +148,10 @@ stage('Deploiement en staging'){
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
                 helm upgrade --install app cast-movie-services --values=values.yaml --namespace prod
                 '''
-              } else {
-                echo " branch non master pas de deployment en prod"
-              }
-
-                }
             }
         }
-
+    } else {
+        echo "Branch non master pas de deployment en prod"
+    }
 }
 }
