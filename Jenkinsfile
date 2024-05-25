@@ -135,6 +135,7 @@ stage('Deploiement en staging'){
         }
         if (env.BRANCH_NAME == 'master') {
             steps {
+              if (env.BRANCH_NAME == 'master') {
 
                     timeout(time: 15, unit: "MINUTES") {
                         input message: 'Une validation Manuel est necessaire pour le deploiement en production', ok: 'oui'
@@ -151,11 +152,12 @@ stage('Deploiement en staging'){
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
                 helm upgrade --install app cast-movie-services --values=values.yaml --namespace prod
                 '''
+              } else {
+                echo " branch non master pas de deployment en prod"
+              }
+
                 }
             }
-          } else {
-            echo " branch non master pas de deployment en prod"
-          }
         }
 
 }
