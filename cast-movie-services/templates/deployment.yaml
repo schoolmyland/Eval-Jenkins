@@ -81,15 +81,15 @@ spec:
         app: cast
     spec:
       containers:
-        - image: {{ .Values.cast.deployment.image }}
-          imagePullPolicy: Always  
-          name: cast
-          command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
-          ports:
-            - containerPort: {{ .Values.cast.service.port }}
-          env:
-          - name: DATABASE_URI
-            value: {{ .Values.cast.env.DATABASE_URI }}
+      - image: {{ .Values.cast.deployment.image }}
+        imagePullPolicy: Always  
+        name: cast
+        command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+        ports:
+        - containerPort: {{ .Values.cast.service.port }}
+        env:
+        - name: DATABASE_URI
+          value: {{ .Values.cast.env.DATABASE_URI }}
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -111,17 +111,17 @@ spec:
         app: movie
     spec:
       containers:
-        - image: {{ .Values.movie.deployment.image }}
-          imagePullPolicy: Always  
-          command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
-          name: movie
-          ports:
-            - containerPort: {{ .Values.movie.service.port }}
-          env:
-          - name: DATABASE_URI
-            value: {{ .Values.movie.env.DATABASE_URI }}
-          - name: CAST_SERVICE_HOST_URL
-            value: {{ .Values.movie.env.CAST_SERVICE_HOST_URL }}
+      - image: {{ .Values.movie.deployment.image }}
+        imagePullPolicy: Always  
+        command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+        name: movie
+        ports:
+        - containerPort: {{ .Values.movie.service.port }}
+        env:
+        - name: DATABASE_URI
+          value: {{ .Values.movie.env.DATABASE_URI }}
+        - name: CAST_SERVICE_HOST_URL
+          value: {{ .Values.movie.env.CAST_SERVICE_HOST_URL }}
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -143,11 +143,11 @@ spec:
         app: nginx
     spec:
       containers:
-        - image: {{ .Values.nginx.deployment.image }}
-          imagePullPolicy: Always  
-          name: nginx
-          ports:
-            - containerPort: {{ .Values.nginx.service.port }}
+      - image: {{ .Values.nginx.deployment.image }}
+        imagePullPolicy: Always  
+        name: nginx
+        ports:
+        - containerPort: {{ .Values.nginx.service.port }}
         volumeMounts:
         - name: nginx-config-volume
           mountPath: /etc/nginx/conf.d
