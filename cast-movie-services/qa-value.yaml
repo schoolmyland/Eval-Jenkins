@@ -7,6 +7,9 @@ cast:
     port: 8000
     targetPort: 8000
     nodePort: 30116
+  env:
+    DATABASE_URI: "postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev"
+
 movie:
   deployment:
     image: poissonchat13/eval-jenkins-movie:latest
@@ -15,23 +18,33 @@ movie:
     port: 8000
     targetPort: 8000
     nodePort: 30115
-db_movie:
+  env:
+    DATABASE_URI: "postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev"
+    CAST_SERVICE_HOST_URL: "http://cast_service:8000/api/v1/casts/"
+
+
+db:
   deployment:
     image: postgres:12.1-alpine
   service:
     type: ClusterIP
     port: 5432
     targetPort: 5432
-db_cast:
-  deployment:
-    image: postgres:12.1-alpine
-  service:
-    type: ClusterIP
-    port: 5432
-    targetPort: 5432
+  movie:
+    username: movie_db_username
+    password: movie_db_password
+    db: movie_db_dev
+  cast:
+    username: cast_db_username
+    password: cast_db_password
+    db: cast_db_dev
 nginx:
-    image: nginx:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx_config.conf:/etc/nginx/conf.d/default.conf
+    deployment:
+      image: nginx:latest
+    service:
+      type: NodePort
+      port: 80
+      targetPort: 80
+      nodePort: 30820
+    volumes: 
+      hostPath: /home/ubuntu/Eval-Jenkins/nginx_config.conf
