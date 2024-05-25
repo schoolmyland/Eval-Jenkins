@@ -22,6 +22,14 @@ db:
     type: ClusterIP
     port: 5432
     targetPort: 5432
+  movie:
+    username: movie_db_username
+    password: movie_db_password
+    db: movie_db_dev
+  cast:
+    username: cast_db_username
+    password: cast_db_password
+    db: cast_db_dev
 nginx:
     deployment:
       image: nginx:latest
