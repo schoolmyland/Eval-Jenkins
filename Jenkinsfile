@@ -115,6 +115,7 @@ stage('Deploiement en staging'){
             steps {
                 script {
                 sh '''
+                rm ./values.yml
                 rm -Rf .kube
                 mkdir .kube
                 ls
