@@ -98,14 +98,10 @@ stage('Deploiement en QA'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-service/values.yaml cs-values.yml
-                cat cs-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
-                helm upgrade --install app cast-service --values=cs-values.yml --namespace qa
-                cp ./movie-service/values.yaml ms-values.yml
-                cat ms-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
-                helm upgrade --install app movie-service --values=ms-values.yml --namespace qa
+                cp ./cast-service/qa-value.yaml cs-values.yml
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app cast-movie-services --values=values.yml --namespace qa
                 '''
                 }
             }
@@ -123,14 +119,10 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-service/values.yaml cs-values.yml
-                cat cs-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
-                helm upgrade --install app cast-service --values=cs-values.yml --namespace staging
-                cp ./movie-service/values.yaml ms-values.yml
-                cat ms-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
-                helm upgrade --install app movie-service --values=ms-values.yml --namespace staging
+                cp ./cast-service/staging-value.yaml values.yml
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app cast-movie-services --values=values.yml --namespace staging
                 '''
                 }
             }
@@ -153,14 +145,10 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-service/values.yaml cs-values.yml
-                cat cs-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" cs-values.yml
-                helm upgrade --install app cast-service --values=cs-values.yml --namespace prod
-                cp ./movie-service/values.yaml ms-values.yml
-                cat ms-values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" ms-values.yml
-                helm upgrade --install app movie-service --values=ms-values.yml --namespace prod
+                cp ./cast-service/prod-value.yaml values.yml
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install app cast-movie-services --values=values.yml --namespace prod
                 '''
                 }
             }
