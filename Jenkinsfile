@@ -112,9 +112,8 @@ pipeline {
                     cp ./cast-movie-services/stag-value.yaml values.yaml
                     cat values.yaml
                     sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
-                    helm upgrade --install app cast-movie-services --values=values.yaml --namespace staging
+                    helm upgrade --install app cast-movie-services --values=values.yaml --namespace stag
                     '''
-
                 }
             }
         }
