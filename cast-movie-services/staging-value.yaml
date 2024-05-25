@@ -1,4 +1,5 @@
 namespace: staging
+
 cast:
   deployment:
     image: poissonchat13/eval-jenkins-cast:latest
@@ -8,7 +9,7 @@ cast:
     targetPort: 8000
     nodePort: 30126
   env:
-    DATABASE_URI: "postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev"
+    DATABASE_URI: "postgresql://cast_db_username:cast_db_password@cast-db/cast_db_dev"
 
 movie:
   deployment:
@@ -19,9 +20,8 @@ movie:
     targetPort: 8000
     nodePort: 30125
   env:
-    DATABASE_URI: "postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev"
-    CAST_SERVICE_HOST_URL: "http://cast_service:8000/api/v1/casts/"
-
+    DATABASE_URI: "postgresql://movie_db_username:movie_db_password@movie-db/movie_db_dev"
+    CAST_SERVICE_HOST_URL: "http://cast-service:8000/api/v1/casts/"
 
 db:
   deployment:
@@ -38,13 +38,14 @@ db:
     username: cast_db_username
     password: cast_db_password
     db: cast_db_dev
+
 nginx:
-    deployment:
-      image: nginx:latest
-    service:
-      type: NodePort
-      port: 80
-      targetPort: 80
-      nodePort: 30830
-    volumes: 
-      hostPath: /home/ubuntu/Eval-Jenkins/nginx_config.conf
+  deployment:
+    image: nginx:latest
+  service:
+    type: NodePort
+    port: 80
+    targetPort: 80
+    nodePort: 30830
+  volumes:
+    hostPath: /home/ubuntu/Eval-Jenkins/nginx_config.conf
