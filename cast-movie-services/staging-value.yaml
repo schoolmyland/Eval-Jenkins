@@ -1,3 +1,4 @@
+
 namespace: staging
 
 cast:
@@ -39,6 +40,7 @@ db:
     username: cast_db_username
     password: cast_db_password
     db: cast_db_dev
+
 nginx:
     deployment:
       image: nginx:latest
