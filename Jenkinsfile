@@ -133,7 +133,6 @@ stage('Deploiement en staging'){
         {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
         }
-        if (env.BRANCH_NAME == 'master') {
             steps {
               if (env.BRANCH_NAME == 'master') {
 
@@ -142,6 +141,8 @@ stage('Deploiement en staging'){
                     }
 
                 script {
+                if (env.BRANCH_NAME == 'master') {
+
                 sh '''
                 rm -Rf .kube
                 mkdir .kube
