@@ -7,6 +7,9 @@ cast:
     port: 8000
     targetPort: 8000
     nodePort: 30106
+  env:
+    DATABASE_URI: "postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev"
+
 movie:
   deployment:
     image: poissonchat13/eval-jenkins-movie:latest
@@ -15,6 +18,11 @@ movie:
     port: 8000
     targetPort: 8000
     nodePort: 30105
+  env:
+    DATABASE_URI: "postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev"
+    CAST_SERVICE_HOST_URL: "http://cast_service:8000/api/v1/casts/"
+
+
 db:
   deployment:
     image: postgres:12.1-alpine
