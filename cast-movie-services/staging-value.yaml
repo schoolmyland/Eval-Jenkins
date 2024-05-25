@@ -1,4 +1,5 @@
 namespace: staging
+
 cast:
   deployment:
     image: poissonchat13/eval-jenkins-cast:latest
