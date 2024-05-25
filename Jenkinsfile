@@ -123,7 +123,7 @@ pipeline {
             }
             steps {
                 script {
-                    if (env.BRANCH_NAME == 'master') {
+                    if (env.GIT_BRANCH == 'master') {
                         timeout(time: 15, unit: "MINUTES") {
                             input message: 'Une validation Manuel est necessaire pour le deploiement en production', ok: 'oui'
                         }
