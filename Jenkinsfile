@@ -119,7 +119,7 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp ./cast-movie-services/staging-value.yaml values.yml
+                cp ./cast-movie-services/prod-value.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install app cast-movie-services --values=values.yml --namespace staging
