@@ -6,7 +6,7 @@ cast:
     type: NodePort
     port: 8000
     targetPort: 8000
-    nodePort: 30126
+    nodePort: 30186
   env:
     DATABASE_URI: "postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev"
 
@@ -17,7 +17,7 @@ movie:
     type: NodePort
     port: 8000
     targetPort: 8000
-    nodePort: 30125
+    nodePort: 30185
   env:
     DATABASE_URI: "postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev"
     CAST_SERVICE_HOST_URL: "http://cast_service:8000/api/v1/casts/"
@@ -45,6 +45,6 @@ nginx:
       type: NodePort
       port: 80
       targetPort: 80
-      nodePort: 30830
+      nodePort: 30860
     volumes: 
       hostPath: /home/ubuntu/Eval-Jenkins/nginx_config.conf
