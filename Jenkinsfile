@@ -139,6 +139,7 @@ pipeline {
                         '''
                     } else {
                         echo "Branch non master pas de deployment en prod"
+                        echo env.BRANCH_NAME
                     }
                 }
             }
